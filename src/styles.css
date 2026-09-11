@@ -547,13 +547,23 @@ h2 {
   max-width: 320px;
   margin-top: 24px;
 }
+.contact-direct {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 35px;
+}
+.contact-direct > span {
+  color: var(--muted);
+  font-size: 12px;
+}
 .contact-email {
   display: inline-flex;
   align-items: center;
   gap: 14px;
   color: var(--green);
   font-size: 14px;
-  margin-top: 35px;
   border-bottom: 1px solid #a8bead;
   padding-bottom: 6px;
 }
@@ -974,7 +984,7 @@ h2 {
   .contact-copy > p:not(.section-label) {
     margin-top: 20px;
   }
-  .contact-email {
+  .contact-direct {
     margin-top: 22px;
   }
   .form-grid {

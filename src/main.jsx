@@ -17,7 +17,7 @@ import "./styles.css";
 import "./motion.css";
 
 const contactEmail =
-  import.meta.env.VITE_CONTACT_EMAIL || "hello@epsilonlabs.org";
+  import.meta.env.VITE_CONTACT_EMAIL || "info.epsilondev@gmail.com";
 const contactConfig = getContactConfig(import.meta.env);
 const contactEndpoint = contactConfig.endpoint;
 
@@ -640,9 +640,12 @@ function App() {
                 A question, an idea, or a process that takes too much time. Tell
                 us what’s on your mind.
               </p>
-              <a className="contact-email" href={`mailto:${contactEmail}`}>
-                {contactEmail} <ArrowUpRight size={16} />
-              </a>
+              <div className="contact-direct">
+                <span>Email us directly</span>
+                <a className="contact-email" href={`mailto:${contactEmail}`}>
+                  {contactEmail} <ArrowUpRight size={16} />
+                </a>
+              </div>
             </div>
             <ContactForm />
           </div>

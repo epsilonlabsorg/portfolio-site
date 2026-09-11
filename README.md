@@ -30,7 +30,7 @@ Tests cover HTTP validation, origin checks, error handling, browser configuratio
 
 ## Contact form and Supabase
 
-Without configuration, the form validates the visitor’s details and prepares an email draft addressed to `hello@epsilonlabs.org`. The visitor must open their email app and send it. The site does not claim delivery, and nothing is transmitted by the Prepare enquiry button. A copy option and selectable draft provide a fallback when no email app is configured.
+Without configuration, the form validates the visitor’s details and prepares an email draft addressed to `info.epsilondev@gmail.com`. The visitor must open their email app and send it. The site does not claim delivery, and nothing is transmitted by the Prepare enquiry button. A copy option and selectable draft provide a fallback when no email app is configured.
 
 Confirm the real inbox before launch. Configure `VITE_CONTACT_EMAIL` in `.env.local` to change it, then rebuild. `.env.example` lists the supported settings.
 
