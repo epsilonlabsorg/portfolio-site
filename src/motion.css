@@ -1,0 +1,120 @@
+/* Preserve-mode design: variance 6, motion 4, density 3. Native CSS is enough
+   for this small motion layer; no scrolling listeners or animation dependency.
+   The existing gray/forest/sage palette, DM Sans, layout and content stay intact. */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.contact-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* One entrance establishes the headline hierarchy, without hiding content
+     behind scroll observers or replaying it as visitors explore the page. */
+  .hero h1 {
+    animation: headline-arrive 620ms var(--ease-out) both;
+  }
+  @keyframes headline-arrive {
+    from {
+      opacity: 0.35;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Starting-style adds progressive enhancement to the existing hidden-based
+     disclosures. Unsupported browsers keep instant, accessible disclosure. */
+  html:not([data-keyboard])
+    :is(
+      .service-content,
+      .project-details,
+      .draft-panel,
+      .navigation-links.menu-open
+    ) {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 220ms var(--ease-out),
+      transform 220ms var(--ease-out);
+  }
+  @starting-style {
+    html:not([data-keyboard])
+      :is(
+        .service-content,
+        .project-details,
+        .draft-panel,
+        .navigation-links.menu-open
+      ) {
+      opacity: 0.4;
+      transform: translateY(6px);
+    }
+  }
+  html:not([data-keyboard])
+    :is(
+      .button,
+      .project-button,
+      .menu-toggle,
+      .copy-button,
+      .filter-list button
+    ) {
+    transition:
+      transform 140ms var(--ease-out),
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+  html:not([data-keyboard])
+    :is(
+      .button,
+      .project-button,
+      .menu-toggle,
+      .copy-button,
+      .filter-list button
+    ):active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .button svg,
+    .hero-portfolio svg,
+    .inline-link svg {
+      transition: transform 180ms var(--ease-out);
+    }
+    .button:not(:disabled):hover svg,
+    .inline-link:hover svg {
+      transform: translate(2px, -2px);
+    }
+    .hero-portfolio:hover svg {
+      transform: translateY(3px);
+    }
+  }
+}
+
+/* Also interrupt in-flight motion when the OS preference changes. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .button:active {
+    transform: none;
+  }
+}
+html[data-keyboard] {
+  scroll-behavior: auto;
+}
+html[data-keyboard] :is(.button, .project-button, .filter-list button) {
+  transition: none;
+}
+html[data-keyboard] .button:active {
+  transform: none;
+}

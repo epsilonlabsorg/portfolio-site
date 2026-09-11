@@ -11,11 +11,15 @@ import { X } from "@phosphor-icons/react/dist/csr/X";
 import "@fontsource-variable/dm-sans";
 import { services, projects } from "./content";
 import { buildBrief, validateEnquiry } from "./enquiry";
+import { getContactConfig, sendEnquiry } from "./contact-api";
+import { useInputModality } from "./motion";
 import "./styles.css";
+import "./motion.css";
 
 const contactEmail =
   import.meta.env.VITE_CONTACT_EMAIL || "hello@epsilonlabs.org";
-const contactEndpoint = import.meta.env.VITE_CONTACT_ENDPOINT || "";
+const contactConfig = getContactConfig(import.meta.env);
+const contactEndpoint = contactConfig.endpoint;
 
 function Brand({ large = false }) {
   return (
@@ -28,7 +32,7 @@ function Brand({ large = false }) {
         ε
       </span>
       <span>
-        epsilon<span className="brand-labs">labs</span>
+        epsilon <span className="brand-labs">labs</span>
       </span>
     </a>
   );
@@ -265,6 +269,7 @@ function ContactForm() {
     company: "",
     service: "",
     message: "",
+    website: "",
   });
   const [errors, setErrors] = useState({});
   const [state, setState] = useState("idle");
@@ -272,9 +277,11 @@ function ContactForm() {
   const [copied, setCopied] = useState(false);
   const controller = useRef(null);
   const form = useRef(null);
+  const submissionId = useRef(null);
   useEffect(() => () => controller.current?.abort(), []);
   function update(event) {
     const { name, value } = event.target;
+    submissionId.current = null;
     setValues((current) => ({ ...current, [name]: value }));
     setErrors((current) => ({ ...current, [name]: undefined }));
     if (state !== "sending") {
@@ -301,30 +308,26 @@ function ContactForm() {
     }
     setState("sending");
     setNotice("Sending your enquiry…");
+    submissionId.current ||= crypto.randomUUID();
     controller.current = new AbortController();
     const timeout = setTimeout(() => controller.current?.abort(), 15000);
     try {
-      const response = await fetch(contactEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          ...values,
-          subject: `Epsilon Labs enquiry: ${values.service || "Let’s discuss"}`,
-        }),
-        signal: controller.current.signal,
-      });
-      if (!response.ok) throw new Error("delivery");
+      await sendEnquiry(
+        contactConfig,
+        values,
+        submissionId.current,
+        controller.current.signal,
+      );
       setState("sent");
       setNotice(
-        "Your enquiry has been sent. Thank you for telling us about your project.",
+        "Your enquiry has been received. Thank you for telling us about your project.",
       );
-    } catch {
+    } catch (error) {
       setState("error");
       setNotice(
-        "We couldn’t send your enquiry. Your details are still here. Try again or open an email draft below.",
+        error.status === 429
+          ? "Too many enquiries right now. Please try again in an hour or open an email draft below."
+          : "We couldn’t confirm your enquiry was received. Your details are still here. Try again or open an email draft below.",
       );
     } finally {
       clearTimeout(timeout);
@@ -376,6 +379,18 @@ function ContactForm() {
       aria-label="Project enquiry"
       aria-busy={state === "sending"}
     >
+      <div className="contact-honeypot" aria-hidden="true">
+        <label htmlFor="website">Leave this field empty</label>
+        <input
+          id="website"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          value={values.website}
+          onChange={update}
+          disabled={state === "sending"}
+        />
+      </div>
       <div className="form-grid">
         {fields.map(({ label, ...field }) => (
           <div className="field" key={field.name}>
@@ -498,6 +513,7 @@ function ContactForm() {
 }
 
 function App() {
+  useInputModality();
   return (
     <>
       <a className="skip-link" href="#main">
