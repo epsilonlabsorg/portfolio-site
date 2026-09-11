@@ -125,6 +125,9 @@ svg {
   font-weight: 400;
   margin-left: 0;
 }
+.brand-symbol::before {
+  content: "ε";
+}
 .navigation-links {
   display: flex;
   align-items: center;

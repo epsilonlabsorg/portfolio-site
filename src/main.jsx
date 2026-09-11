@@ -28,9 +28,7 @@ function Brand({ large = false }) {
       className={`brand${large ? " brand-large" : ""}`}
       aria-label="Epsilon Labs home"
     >
-      <span className="brand-symbol" aria-hidden="true">
-        ε
-      </span>
+      <span className="brand-symbol" aria-hidden="true" />
       <span>
         epsilon <span className="brand-labs">labs</span>
       </span>
