@@ -92,7 +92,7 @@ Setup follows the official Supabase documentation for [Edge Function configurati
 
 ## Portfolio content
 
-Edit `src/content.js` to update services and portfolio entries. The current portfolio contains four explicitly labeled illustrative briefs, not client work or reported results. Replace them with verified project descriptions and update the disclosure when real case studies are available.
+Edit `src/content.js` to update services and portfolio entries. The current portfolio starts with three video demos: Access Studio, Customer Operations Command Center, and Olist Intelligence. Their videos are imported from `videos/` and bundled by Vite; preview posters live in `public/projects/`. Players load on expansion and use native controls without autoplay. Each demo includes its own disclosure; no client results are claimed.
 
 ## Design
 

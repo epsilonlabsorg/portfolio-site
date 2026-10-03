@@ -7,6 +7,7 @@ import { Copy } from "@phosphor-icons/react/dist/csr/Copy";
 import { List } from "@phosphor-icons/react/dist/csr/List";
 import { Minus } from "@phosphor-icons/react/dist/csr/Minus";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { Play } from "@phosphor-icons/react/dist/csr/Play";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import "@fontsource-variable/dm-sans";
 import { services, projects } from "./content";
@@ -177,10 +178,10 @@ function Portfolio() {
       <div className="container">
         <div className="section-heading">
           <p className="section-label">Portfolio</p>
-          <h2 id="portfolio-title">A look at what’s possible.</h2>
+          <h2 id="portfolio-title">See the work in action.</h2>
           <p>
-            Illustrative project briefs for the systems we can build. These
-            examples are not client engagements.
+            Explore three project demos of the systems we build, from patient
+            access to customer operations and business intelligence.
           </p>
         </div>
         <div className="portfolio-toolbar">
@@ -189,7 +190,7 @@ function Portfolio() {
             role="group"
             aria-label="Filter portfolio"
           >
-            {["All", "Knowledge", "Automation", "Decision tools"].map(
+            {["All", ...new Set(projects.map((project) => project.category))].map(
               (item) => (
                 <button
                   key={item}
@@ -206,7 +207,7 @@ function Portfolio() {
           </div>
           <span className="result-count" role="status">
             {visibleProjects.length}{" "}
-            {visibleProjects.length === 1 ? "example" : "examples"}
+            {visibleProjects.length === 1 ? "project" : "projects"}
           </span>
         </div>
         <div className="project-list">
@@ -219,15 +220,26 @@ function Portfolio() {
                   <div className="project-overview">
                     <h3>{project.title}</h3>
                     <p>{project.description}</p>
+                    <span className="project-format">
+                      {project.video
+                        ? `Video demo · ${project.duration}`
+                        : "Illustrative brief"}
+                    </span>
                   </div>
                   <button
                     className="project-button"
                     aria-expanded={isOpen}
                     aria-controls={`project-${project.id}`}
                     onClick={() => setSelected(isOpen ? null : project.id)}
-                    aria-label={`${isOpen ? "Close" : "Explore"} ${project.title}`}
+                    aria-label={`${isOpen ? "Close" : project.video ? "Watch demo of" : "Explore"} ${project.title}`}
                   >
-                    {isOpen ? <Minus size={23} /> : <ArrowUpRight size={23} />}
+                    {isOpen ? (
+                      <Minus size={23} />
+                    ) : project.video ? (
+                      <Play size={21} />
+                    ) : (
+                      <ArrowUpRight size={23} />
+                    )}
                   </button>
                 </div>
                 <div
@@ -235,20 +247,42 @@ function Portfolio() {
                   id={`project-${project.id}`}
                   className="project-details"
                 >
+                  {project.video && isOpen && (
+                    <figure className="project-media">
+                      <video
+                        controls
+                        playsInline
+                        preload="none"
+                        poster={project.poster}
+                        aria-label={`${project.title} project walkthrough`}
+                        aria-describedby={`project-video-summary-${project.id}`}
+                      >
+                        <source src={project.video} type="video/mp4" />
+                        Your browser does not support video playback.
+                      </video>
+                      <figcaption id={`project-video-summary-${project.id}`}>
+                        {project.highlights}{" "}
+                        <a href={project.video}>Open video</a>
+                      </figcaption>
+                    </figure>
+                  )}
                   <div>
                     <h4>The starting point</h4>
                     <p>{project.problem}</p>
                   </div>
                   <div>
-                    <h4>The proposed system</h4>
+                    <h4>{project.video ? "The system" : "The proposed system"}</h4>
                     <p>{project.solution}</p>
                   </div>
-                  <div>
-                    <h4>How we would evaluate it</h4>
-                    <p>{project.measurement}</p>
-                  </div>
+                  {!project.video && (
+                    <div>
+                      <h4>How we would evaluate it</h4>
+                      <p>{project.measurement}</p>
+                    </div>
+                  )}
                   <p className="project-disclaimer">
-                    Illustrative brief. No client results are claimed.
+                    {project.disclosure ||
+                      "Illustrative brief. No client results are claimed."}
                   </p>
                 </div>
               </article>

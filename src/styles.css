@@ -467,6 +467,37 @@ h2 {
   place-items: center;
   transition: background 160ms ease;
 }
+.project-format {
+  display: block;
+  margin-top: 12px;
+  color: var(--green);
+  font-size: 12px;
+}
+.project-media {
+  grid-column: 1 / -1;
+  margin: 0;
+  min-width: 0;
+}
+.project-media video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+  border: 1px solid #bacabd;
+  border-radius: 4px;
+}
+.project-media figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+.project-media a {
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
 .project-button:hover,
 .project-button[aria-expanded="true"] {
   background: var(--green);

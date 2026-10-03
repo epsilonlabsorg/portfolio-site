@@ -1,3 +1,7 @@
+import accessStudioVideo from "../videos/WhatsApp Video 2026-09-23 at 1.34.49 AM.mp4";
+import customerOperationsVideo from "../videos/WhatsApp Video 2026-09-25 at 2.21.53 AM.mp4";
+import olistVideo from "../videos/brag.mp4";
+
 export const services = [
   {
     id: "data",
@@ -49,56 +53,45 @@ export const services = [
   },
 ];
 
-// Illustrative briefs, not delivered projects. Replace with verified client work.
+// Portfolio projects with video walkthroughs.
 export const projects = [
   {
-    id: "knowledge",
-    category: "Knowledge",
-    title: "A company knowledge assistant",
-    description:
-      "Find the answer across documents, policies, and internal knowledge.",
-    problem:
-      "A growing team spends time searching scattered documents and asking the same questions.",
-    solution:
-      "A permission-aware assistant retrieves relevant documents and includes source references with each answer.",
-    measurement:
-      "Test answer quality, source accuracy, and time to find information against a set of real team questions.",
-  },
-  {
-    id: "documents",
+    id: "access-studio",
     category: "Automation",
-    title: "Documents into decisions",
-    description:
-      "Turn incoming documents into structured records and review tasks.",
-    problem:
-      "Staff manually read documents, copy fields between tools, and chase missing information.",
-    solution:
-      "Extract agreed fields, flag uncertain values for review, and route approved records to existing systems.",
-    measurement:
-      "Compare extraction accuracy, review effort, and processing time with the current manual workflow.",
+    title: "Access Studio",
+    description: "A clearer path to care, from a conversation to a confirmed appointment.",
+    problem: "Booking a visit involves choosing a service, verifying identity, and getting the right help when a request needs a person.",
+    solution: "A shared patient and staff experience with a voice assistant, appointment confirmation, and a human handoff queue.",
+    highlights: "The walkthrough shows patient access, a spoken booking request, demo identity verification, and the staff workspace.",
+    disclosure: "Portfolio prototype with fictional patient data and simulated verification. No live clinical service is shown.",
+    video: accessStudioVideo,
+    poster: "/projects/access-studio.webp",
+    duration: "0:37",
   },
   {
-    id: "operations",
+    id: "customer-operations",
+    category: "Automation",
+    title: "Customer Operations Command Center",
+    description: "Turn a support incident into an investigation your team can inspect.",
+    problem: "When a customer workflow breaks after a deployment, support teams need to understand what changed and prepare a useful engineering handoff.",
+    solution: "A command center brings together cases, telemetry, an investigation trace, and an AI support assistant to examine the evidence.",
+    highlights: "Follow a deployment investigation through its checks, a probable client-version regression, and the recommended engineering handoff.",
+    disclosure: "Product demonstration using synthetic customer data. The diagnosis shown belongs to the demo scenario.",
+    video: customerOperationsVideo,
+    poster: "/projects/customer-operations.webp",
+    duration: "0:21",
+  },
+  {
+    id: "olist-intelligence",
     category: "Decision tools",
-    title: "An operations briefing",
-    description: "Bring the changes that matter into one useful daily summary.",
-    problem:
-      "Managers compile updates from several systems before they can understand what needs attention.",
-    solution:
-      "Combine approved operational data into a briefing with source links, exceptions, and clearly defined metrics.",
-    measurement:
-      "Evaluate completeness, freshness, and the time needed to prepare and act on the daily briefing.",
-  },
-  {
-    id: "requests",
-    category: "Automation",
-    title: "A better enquiry workflow",
-    description: "Organize new requests and get them to the right person.",
-    problem:
-      "Enquiries arrive in shared inboxes and need manual classification, assignment, and follow-up.",
-    solution:
-      "Classify requests, suggest responses using approved knowledge, and create tasks for a human to review.",
-    measurement:
-      "Track routing accuracy, response preparation time, and the rate of requests that need correction.",
+    title: "Olist Intelligence",
+    description: "Explore sales, delivery, and customer feedback with answers grounded in the data.",
+    problem: "Business questions span order records, delivery performance, and customer reviews. An answer needs clear metric definitions and an honest account of what the data can support.",
+    solution: "An analytics experience combines governed metrics, review search, role-aware views, and an AI assistant that identifies questions the dataset cannot answer.",
+    highlights: "The demo explores delivered item value, customer review search, seller-scoped records, and a question about profit that the available data cannot support.",
+    disclosure: "Portfolio demonstration using Olist data. Figures shown describe the selected demo records, not client results.",
+    video: olistVideo,
+    poster: "/projects/olist-intelligence.webp",
+    duration: "0:50",
   },
 ];
